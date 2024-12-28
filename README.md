@@ -99,7 +99,6 @@ The game plays background music and sound effects. For example, background music
 
 ## Supported Screen Sizes
 
-- **Mobile**: Fully responsive, works well on small devices like smartphones.
 - **Tablet**: Adapted for medium-sized devices.
 - **Desktop**: Supports large screen sizes with a neat layout.
 
