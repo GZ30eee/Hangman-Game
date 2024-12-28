@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="hangman.css" />
+  </head>
+  <style></style>
+  <body onload="showFullscreenPrompt()">
+    <div id="message" style="display: none">
+      <p>Please enter fullscreen mode for the best experience.</p>
+      <button id="fullscreenButton">Go Fullscreen</button>
+    </div>
+
+    <script>
+      function showFullscreenPrompt() {
+        // Display the message prompting for fullscreen
+        document.getElementById("message").style.display = "block";
+
+        // Add event listener to the button
+        document.getElementById("fullscreenButton").onclick = function () {
+          openFullscreen();
+        };
+      }
+
+      function openFullscreen() {
+        var elem = document.documentElement; // Use the entire document
+
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          // Safari
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          // IE11
+          elem.msRequestFullscreen();
+        }
+      }
+    </script>
+  </body>
+  <body>
+    <div class="bg"></div>
+    <div id="quitModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-icon">⚠️</span>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to quit the game?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="quitYes" class="close-btn">Yes</button>
+          <button id="quitNo" class="close-btn">No</button>
+        </div>
+      </div>
+    </div>
+    <div class="centered">
+      <div class="wrapper">
+        <div class="content">
+          <h1 id="head">H A N G M A N</h1>
+
+          <!-- Added developer text here -->
+        </div>
+
+        <div class="game-container">
+          <!-- Game elements like score, buttons, canvas, etc. go here -->
+          <div id="highScoreDisplay"></div>
+          <div id="scoreDisplay"></div>
+          <div id="buttons"></div>
+          <p id="catagoryName"></p>
+          <div id="hold"></div>
+          <p id="mylives"></p>
+          <p id="clue"></p>
+          <canvas id="stickman" class="drawing_stickman">
+            This Text will show if the Browser does NOT support HTML5 Canvas tag
+          </canvas>
+          <div class="container">
+            <table>
+              <tr>
+                <td>
+                  <button
+                    id="reset"
+                    class="button50"
+                    onclick="document.location.reload()"
+                  >
+                    R E S E T
+                  </button>
+                </td>
+                <td><button id="hint" class="button50">H I N T</button></td>
+                <td><button id="next" class="button50">N E X T</button></td>
+                <!-- Quit Modal -->
+
+                <td>
+                  <button id="quitButton" class="button50">Q U I T</button>
+                </td>
+              </tr>
+            </table>
+            <p id="developer">
+              Developed by
+              <a href="https://github.com/GZ30eee" style="color: brown"
+                >GM Zala</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message for small screens -->
+      <div class="resize-message">
+        <h2>
+          This game is optimized for screens larger than 778x598px. Please
+          resize your window!
+        </h2>
+      </div>
+    </div>
+
+    <script src="hangman.js"></script>
+    <audio id="backgroundMusic" loop>
+      <source src="Elevator-music.mp3" type="audio/wav" />
+      Your browser does not support the audio element.
+    </audio>
+  </body>
+</html>

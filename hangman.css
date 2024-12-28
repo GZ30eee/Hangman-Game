@@ -1,0 +1,581 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+/* The message that will show up on small screens */
+.resize-message {
+  display: none;
+  text-align: center;
+  font-size: 20px;
+  color: red;
+  margin-top: 50px;
+}
+
+/* Media query for screen size smaller than 778px x 598px */
+@media screen and (max-width: 778px) and (max-height: 598px) {
+  .game-container {
+    display: none; /* Hide the game */
+  }
+
+  .resize-message {
+    display: block; /* Show the message */
+  }
+}
+
+/* Styling for the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+  height: 10px; /* Set the height of the scrollbar for horizontal scrolling */
+}
+
+/* Styling the scrollbar track */
+::-webkit-scrollbar-track {
+  background: transparent; /* Light background for the track */
+  border-radius: 10px; /* Round the track */
+}
+
+/* Styling the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Round the thumb */
+  transition: background 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Styling the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darken the thumb when hovered */
+}
+
+/* Optional: Styling the scrollbar when it is focused (e.g., clicked) */
+::-webkit-scrollbar-thumb:active {
+  background: #333; /* Darker thumb when clicked */
+}
+
+/* Optional: Horizontal scrollbar styling */
+::-webkit-scrollbar-horizontal {
+  height: 8px; /* Height for horizontal scrollbars */
+}
+
+/* Optional: Styling for the scrollbar corner when both vertical and horizontal scrollbars are present */
+::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
+/*Main division of the game*/
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body {
+  background: #f7dc6f;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: white;
+  height: 97%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.wrappper {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+/*clue*/
+#clue {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: smaller;
+}
+/*The Hangman Border*/
+canvas {
+  color: white;
+  border: white dashed 2px;
+  padding: 15px;
+}
+
+/*heading*/
+h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-size: 2.6em;
+  text-transform: uppercase;
+  margin: 0px 0;
+}
+
+#alphabet {
+  margin: 15px auto;
+  padding: 0;
+  max-width: 900px;
+}
+
+#alphabet li {
+  float: left;
+  margin: 0 10px 10px 0;
+  list-style: none;
+  width: 35px;
+  height: 30px;
+  padding-top: 10px;
+  background: black;
+  color: white;
+  cursor: pointer;
+  border: solid 1px white;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
+  &:hover {
+    background: white;
+    border: solid 1px white;
+    color: black;
+  }
+}
+
+/*dash for the guessed word*/
+#my-word {
+  margin: 0;
+  display: block;
+  padding: 0;
+  display: block;
+}
+
+#my-word li {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  display: inline-block;
+  padding: 0 10px;
+  font-size: 1.6em;
+  white-space: nowrap; /*new addition*/
+}
+
+div {
+  display: block;
+}
+
+#mylives {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: medium;
+  text-align: center;
+  display: block;
+}
+
+/*Media Query for 767 and 480*/
+@media (max-width: 767px) {
+  #alphabet {
+    padding: 0 0 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  #alphabet {
+    padding: 0 0 0 25px;
+  }
+}
+
+/*BG colors- red, light-blue, blue*/
+#red {
+  fill: none;
+  opacity: 0.15;
+  stroke: red;
+  stroke-width: 12;
+  stroke-miterlimit: 10;
+  animation: show 4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#blue {
+  fill: none;
+  opacity: 0.15;
+  stroke: orange;
+  stroke-width: 12;
+  stroke-miterlimit: 10;
+  animation: show 4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+#light-blue {
+  fill: none;
+  opacity: 0.15;
+  stroke: orangered;
+  stroke-width: 6;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 800;
+  animation: draw 4s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/*to ddraw the BG lines*/
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/*LINE(s)*/
+@keyframes show {
+  0% {
+    opacity: 0.15;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0.15;
+  }
+}
+
+/*Drawing the stickman in the box*/
+.drawing_stickman {
+  margin-bottom: 10px;
+}
+
+/*Hint and Play again css here*/
+.button50 {
+  appearance: button;
+  background-color: #000;
+  background-image: none;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #fff 4px 4px 0 0, #000 4px 4px 0 1px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 5px 10px 0;
+  overflow: visible;
+  padding: 12px 40px;
+  text-align: center;
+  text-transform: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button50:focus {
+  text-decoration: none;
+}
+
+.button50:hover {
+  text-decoration: none;
+}
+
+.button50:active {
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.button50:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button50 {
+    padding: 12px 50px;
+  }
+}
+
+
+
+
+/* Glass Effect Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  visibility: hidden; /* Hidden by default */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.1); /* Glass effect */
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  backdrop-filter: blur(10px); /* Glass effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  max-width: 400px;
+}
+
+.modal-header {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.modal-body {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  margin-top: 20px;
+}
+
+.close-btn {
+  padding: 10px 20px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.close-btn:hover {
+  background-color: #45a049;
+}
+
+#quitModal.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#svg {
+  enable-background: new 0 0 1820 1080;
+}
+
+#developer {
+  font-size: 16px;            /* Adjust font size */
+  color: #555;                /* Set a color, you can customize it */
+  text-align: center;         /* Center the text */
+  margin-top: 10px;           /* Space above the developer text */
+  font-style: italic;         /* Optional: Make it italic for a nice touch */
+}
+
+#head {
+  color: black;
+}
+
+#scoreDisplay {
+  margin: 1px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#highScoreDisplay {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg {
+  position: fixed;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 300% 300%;
+  background-image: linear-gradient(
+    -45deg,
+    #ff4500 0%,
+    #ff6347 12.5%,
+    #ff7f50 25%,
+    #ff8c00 37.5%,
+    #ffa500 50%,
+    #febe10 62.5%,
+    #ffc72c 75%,
+    #ffd700 87.5%,
+    #ffff00 100%
+  );
+  -webkit-animation: AnimateBG 20s ease infinite;
+  animation: AnimateBG 20s ease infinite;
+}
+
+@-webkit-keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.catagoryName {
+  font-family: monospace;
+}
+
+.button86 {
+  all: unset;
+  width: 100px;
+  height: 30px;
+  font-size: 16px;
+  background: transparent;
+  border: none;
+  position: relative;
+  color: #f0f0f0;
+  cursor: pointer;
+  z-index: 1;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.button86::after,
+.button86::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -99999;
+  transition: all 0.4s;
+}
+
+.button86::before {
+  transform: translate(0%, 0%);
+  width: 100%;
+  height: 100%;
+  background: #28282d;
+  border-radius: 10px;
+}
+
+.button86::after {
+  transform: translate(10px, 10px);
+  width: 35px;
+  height: 35px;
+  background: #ffffff15;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  border-radius: 50px;
+}
+
+.button86:hover::before {
+  transform: translate(5%, 20%);
+  width: 110%;
+  height: 110%;
+}
+
+.button86:hover::after {
+  border-radius: 10px;
+  transform: translate(0, 0);
+  width: 100%;
+  height: 100%;
+}
+
+.button86:active::after {
+  transition: 0s;
+  transform: translate(0, 5%);
+}
+
+.checkbox-wrapper-54 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 80px;
+  padding-left: 30px;
+}
+.checkbox-wrapper-54 input[type="checkbox"] {
+  visibility: hidden;
+  display: none;
+}
+
+.checkbox-wrapper-54 *,
+.checkbox-wrapper-54 ::after,
+.checkbox-wrapper-54 ::before {
+  box-sizing: border-box;
+}
+
+/* The switch - the box around the slider */
+.checkbox-wrapper-54 .switch {
+  --width-of-switch: 3.5em;
+  --height-of-switch: 2em;
+  /* size of sliding icon -- sun and moon */
+  --size-of-icon: 1.4em;
+  /* it is like a inline-padding of switch */
+  --slider-offset: 0.3em;
+  position: relative;
+  width: var(--width-of-switch);
+  height: var(--height-of-switch);
+  display: inline-block;
+}
+
+/* The slider */
+.checkbox-wrapper-54 .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f4f4f5;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.checkbox-wrapper-54 .slider:before {
+  position: absolute;
+  content: "";
+  height: var(--size-of-icon, 1.4em);
+  width: var(--size-of-icon, 1.4em);
+  border-radius: 20px;
+  left: var(--slider-offset, 0.3em);
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(40deg, #ff0080, #ff8c00 70%);
+  transition: 0.4s;
+}
+
+.checkbox-wrapper-54 input:checked + .slider {
+  background-color: #303136;
+}
+
+.checkbox-wrapper-54 input:checked + .slider:before {
+  left: calc(100% - (var(--size-of-icon, 1.4em) + var(--slider-offset, 0.3em)));
+  background: #303136;
+  /* change the value of second inset in box-shadow to change the angle and direction of the moon  */
+  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -4px 0 0 #a3dafb;
+}
